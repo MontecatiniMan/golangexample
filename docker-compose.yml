@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  golangexample:
+    image: golangexample:1.0
+    build:
+      context: ./
+      dockerfile: ./docker/go/Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+  
+  postgresql:
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+      POSTGRES_DB: golangexample
+    image: postgres:14
+    ports:
+      - "5433:5432"
+    networks:
+      - default
+    volumes:
+      - ./docker/pg_data:/var/lib/postgresql/data
